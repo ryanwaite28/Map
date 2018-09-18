@@ -1,0 +1,36 @@
+body,
+html {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+}
+
+.main-wrap {
+  height: 100%;
+}
+
+.map {
+  height: 98%;
+}
+
+.place-name {
+  font-style: italic;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.place-address {
+  font-style: Arial;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.place-description {
+  font-style: Arial;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+#root {
+  height: 100%;
+}
