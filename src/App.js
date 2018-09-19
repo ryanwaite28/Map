@@ -2,16 +2,35 @@ import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+
 import './App.css';
 import axios from 'axios';
 
-//https://github.com/PaulLeCam/react-leaflet/issues/453
-delete L.Icon.Default.prototype._getIconUrl;
+import iconRedUrl from './location-pointer-red.svg'
+import iconBlueUrl from './location-pointer-blue.svg'
+import AppTitle from './AppTitle'
 
-L.Icon.Default.mergeOptions({
+//https://github.com/PaulLeCam/react-leaflet/issues/453
+//delete L.Icon.Default.prototype._getIconUrl;
+
+/*L.Icon.Default.mergeOptions({
     iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
     iconUrl: require('leaflet/dist/images/marker-icon.png'),
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+});*/
+
+const redIcon = L.icon({
+    iconUrl: iconRedUrl,
+    iconSize: [38, 95], // size of the icon
+    iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+    popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+const blueIcon = L.icon({
+    iconUrl: iconBlueUrl,
+    iconSize: [38, 95], // size of the icon
+    iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+    popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
 //https://github.com/PaulLeCam/react-leaflet/blob/master/example/components/simple.js
@@ -25,6 +44,13 @@ class App extends Component {
     },
     zoom: 13,
     places: []
+  }
+
+  changeMarkerColor = (e) => {
+    const {markers} = this.state
+    e.target.setIcon(blueIcon);
+    markers.push(e.marker)
+    this.setState({markers})
   }
 
   componentDidMount() {
@@ -58,7 +84,11 @@ getPlaces = () => {
 
     return (
       <div className="main-wrap">
-        <Map className="map" center={position} zoom={this.state.zoom}>
+        <AppTitle />
+        <Map className="map"
+          center={position}
+          zoom={this.state.zoom}
+          >
           <TileLayer
            attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -66,7 +96,9 @@ getPlaces = () => {
            {this.state.places.map(place => (
              <Marker
               key={place.venue.id}
-              position={[place.venue.location.lat, place.venue.location.lng]}>
+              position={[place.venue.location.lat, place.venue.location.lng]}
+              icon={redIcon}
+              onClick={this.state.changeMarkerColor}>
               <Popup>
                 <p className="place-name">{[place.venue.name]}</p>
                 <p className="place-address">{[place.venue.location.formattedAddress]}</p>

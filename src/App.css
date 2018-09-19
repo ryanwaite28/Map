@@ -5,12 +5,18 @@ html {
   height: 100%;
 }
 
+.project-title{
+  font-style: Arial;
+  text-align: center;
+  background-color: white;
+}
+
 .main-wrap {
   height: 100%;
 }
 
 .map {
-  height: 98%;
+  height: 100%;
 }
 
 .place-name {
@@ -30,6 +36,7 @@ html {
   font-size: 20px;
   font-weight: 400;
 }
+
 
 #root {
   height: 100%;
