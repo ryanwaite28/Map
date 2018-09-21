@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -21,7 +21,7 @@ const blueIcon = new L.icon({
     //iconSize: [38, 95], // size of the icon
     //iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
     //popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-});
+});*/
 
 /*delete L.Icon.Default.prototype._getIconUrl;
 
@@ -53,9 +53,9 @@ const myIcon = L.Icon({
   //html: `<span style="${markerHtmlStyles}" />`
 })*/
 
-class MarkerColor extends Component {
-  constructor(props) {
-    super(props);
+/*class MarkerColor extends Component {
+  constructor() {
+    super();
     this.state = {
       markers: [
         false,
@@ -71,7 +71,7 @@ class MarkerColor extends Component {
       ];
     }*/
 
-    const is_selected = color_states[index];
+    /*const is_selected = color_states[index];
     color_states[index] = !is_selected;
     this.setState({
       colors: color_states
@@ -104,4 +104,4 @@ class MarkerColor extends Component {
   }
 }
 
-export default MarkerColor;
+export default MarkerColor;*/

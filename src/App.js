@@ -6,11 +6,9 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet-defaulticon-compatibility';
 import './App.css';
 import axios from 'axios';
-
+import AppTitle from './AppTitle'
 import iconRedUrl from './location-pointer-red.svg'
 import iconBlueUrl from './location-pointer-blue.svg'
-import AppTitle from './AppTitle'
-import MarkerColor from './MarkerColor'
 
 //https://github.com/PaulLeCam/react-leaflet/issues/453
 //delete L.Icon.Default.prototype._getIconUrl;
@@ -21,19 +19,19 @@ import MarkerColor from './MarkerColor'
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });*/
 
-/*const redIcon = L.icon({
+const redIcon = L.icon({
     iconUrl: iconRedUrl,
     iconSize: [38, 95], // size of the icon
     iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
     popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-});*/
+});
 
-/*const blueIcon = L.icon({
+const blueIcon = L.icon({
     iconUrl: iconBlueUrl,
     iconSize: [38, 95], // size of the icon
     iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
     popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-});*/
+});
 
 //https://github.com/PaulLeCam/react-leaflet/blob/master/example/components/simple.js
 //https://www.youtube.com/watch?v=J7pFiXh-ydA
@@ -48,15 +46,18 @@ class App extends Component {
       },
       zoom: 13,
       places: [],
-      markers: [[-7,6079, 110.2038]]
+      markers: [[-7,6079, 110.2038]],
     };
   }
 
   /*changeMarkerColor = (e) => {
     const {markers} = this.state
     e.target.setIcon(blueIcon);
-    markers.push(e.marker)
-    this.setState({markers})
+    markers.push(e.marker);
+    this.setState({markers});
+    setTimeout(() => {
+      this.setState({markers})
+    }, 3000)
   }*/
 
   componentDidMount() {
@@ -103,7 +104,16 @@ getPlaces = () => {
              <Marker
               key={place.venue.id}
               position={[place.venue.location.lat, place.venue.location.lng]}
-              MarkerColor = {this.state.MarkerColor}
+              icon={blueIcon}
+              onClick={(e) => {
+               console.log(e);
+               e.target.setIcon(redIcon);
+               setTimeout(() => {
+                 e.target.setIcon(blueIcon);
+               }, 800);
+             }}
+              //onClick={this.changeMarkerColor}
+              //MarkerColor={this.state.MarkerColor}
               >
               <Popup>
                 <p className="place-name">{[place.venue.name]}</p>
