@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'; // Re-uses images from ~leaflet package
+import 'leaflet-defaulticon-compatibility';
 import './App.css';
 import axios from 'axios';
 
@@ -47,11 +48,11 @@ class App extends Component {
       },
       zoom: 13,
       places: [],
-      //markers: [[-7,6079, 110.2038]]
+      markers: [[-7,6079, 110.2038]]
     };
   }
 
-/*  changeMarkerColor = (e) => {
+  /*changeMarkerColor = (e) => {
     const {markers} = this.state
     e.target.setIcon(blueIcon);
     markers.push(e.marker)
@@ -102,9 +103,7 @@ getPlaces = () => {
              <Marker
               key={place.venue.id}
               position={[place.venue.location.lat, place.venue.location.lng]}
-              //icon={redIcon}
-              //onClick={this.changeMarkerColor}
-              icon = { this.renderColors.call(this) }
+              MarkerColor = {this.state.MarkerColor}
               >
               <Popup>
                 <p className="place-name">{[place.venue.name]}</p>
