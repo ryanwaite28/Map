@@ -25,6 +25,8 @@ html {
 
 .map {
   height: 90%;
+  margin-left: 250px;
+  margin-right: 0px;
 }
 
 .place-name {
@@ -39,13 +41,30 @@ html {
   font-weight: 400;
 }
 
-.place-description {
+.place-category {
   font-style: Arial;
   font-size: 20px;
   font-weight: 400;
 }
 
+.drop-down-container {
+  z-index: 999;
+  position: absolute;
+  top: 70px;
+  margin-left: 5px;
+}
+
+.drop-down-content {
+  width: 240px;
+}
 
 #root {
   height: 100%;
+}
+
+/*Dropdown*/
+.drop-down--arrow {
+  width: 30px;
+  height: 30px;
+  margin: 0;
 }

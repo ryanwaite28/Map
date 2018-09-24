@@ -9,7 +9,7 @@ import axios from 'axios';
 import AppTitle from './AppTitle'
 import iconRedUrl from './location-pointer-red.svg'
 import iconBlueUrl from './location-pointer-blue.svg'
-
+import DropDown from './DropDown'
 //https://github.com/PaulLeCam/react-leaflet/issues/453
 //delete L.Icon.Default.prototype._getIconUrl;
 
@@ -40,16 +40,37 @@ class App extends Component {
   constructor () {
     super();
     this.state = {
+      map: {},
       location: {
         lat: -7.6079,
         lng: 110.2038
       },
       zoom: 13,
       places: [],
-      markers: [[-7,6079, 110.2038]],
+      markers: [],
+      searchQuery: 'all',
     };
   }
 
+  //function to filter based on place category
+  /*filter = (searchQuery) => {
+    const map = this.state.map;
+    const markers= this.state.markers;
+    //clear map
+    markers.forEach(marker => marker.setMap(null))
+
+    const selectPlaces = this.state.places.map((place) => {
+      if ((place.venue.categories[0].name === searchQuery) || (searchQuery === 'all')) {
+        place.visible = true
+      } else {
+        place.visible = false
+      }
+      return place
+    });
+
+    this.setState({selectPlaces, searchQuery});
+    this.setMarkers(map)
+  };*/
   /*changeMarkerColor = (e) => {
     const {markers} = this.state
     e.target.setIcon(blueIcon);
@@ -64,31 +85,32 @@ class App extends Component {
     this.getPlaces()
   }
 
-//https://www.youtube.com/watch?v=dAhMIF0fNpo
-getPlaces = () => {
-  const endPoint = "https://api.foursquare.com/v2/venues/explore?"
-  const parameters = {
-    client_id: "POKXMHQJY0EHTRGZEPMVWPJDWMUTSVRRINJILUSE5WZTSTUI",
-    client_secret: "N4QKO4TTH4QKBFQ3SBYHUTQ5RUWMGAZ0B5JDYUE0H3V2W151",
-    section: "nextVenues",
-    near: "Borobudur",
-    v: "20180725"
-  }
-  axios.get(endPoint + new URLSearchParams(parameters))
-    .then(response => {
-      console.log(response.data.response.groups[0].items)
-      this.setState({
-        places: response.data.response.groups[0].items
+  //https://www.youtube.com/watch?v=dAhMIF0fNpo
+  getPlaces = () => {
+    const endPoint = "https://api.foursquare.com/v2/venues/explore?"
+    const parameters = {
+      client_id: "POKXMHQJY0EHTRGZEPMVWPJDWMUTSVRRINJILUSE5WZTSTUI",
+      client_secret: "N4QKO4TTH4QKBFQ3SBYHUTQ5RUWMGAZ0B5JDYUE0H3V2W151",
+      section: "nextVenues",
+      near: "Borobudur",
+      v: "20180725"
+    }
+    axios.get(endPoint + new URLSearchParams(parameters))
+      .then(response => {
+        console.log(response.data.response.groups[0].items)
+        this.setState({
+          places: response.data.response.groups[0].items
+        })
       })
-    })
-    .catch(error => {
-      console.log("Error!" + error)
-    })
-}
+      .catch(error => {
+        console.log("Error!" + error)
+      })
+    }
 
   render() {
     const position = [this.state.location.lat, this.state.location.lng];
-
+    //const {searchQuery, places, map, markers, place} = this.state;
+    //const value = this.state;
     return (
       <div className="main-wrap">
         <AppTitle />
@@ -110,19 +132,20 @@ getPlaces = () => {
                e.target.setIcon(redIcon);
                setTimeout(() => {
                  e.target.setIcon(blueIcon);
-               }, 800);
+               }, 1500);
              }}
               //onClick={this.changeMarkerColor}
               //MarkerColor={this.state.MarkerColor}
-              >
+             >
               <Popup>
                 <p className="place-name">{[place.venue.name]}</p>
-                <p className="place-address">{[place.venue.location.formattedAddress]}</p>
-                <p className="place-description">{[place.reasons.items[0].summary]}</p>
+                <p className="place-address">{[place.venue.location.address]}</p>
+                <p className="place-category">{[place.venue.categories[0].name]}</p>
               </Popup>
             </Marker>
           ))}
         </Map>
+        <DropDown />
       </div>
     );
   }
