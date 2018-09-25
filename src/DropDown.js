@@ -1,13 +1,37 @@
 import React, {Component} from "react";
-import axios from 'axios';
 import './App.css';
+import ListItem from './ListItem'
+import axios from 'axios';
+
+//https://www.carlrippon.com/react-drop-down-data-binding/
 
 class DropDown extends Component {
   state = {
     places: [],
-    selectedPlaces: '',
-    validationError: ''
+    /*selectedPlaces: '',
+    validationError: '',
+    searchQuery: 'all',*/
   };
+
+  //function to filter based on place category
+  /*filter = (searchQuery) => {
+    const map = this.state.map;
+    const markers= this.state.markers;
+    //clear map
+    markers.forEach(marker => marker.setMap(null))
+
+    const selectPlaces = this.state.places.map((place) => {
+      if ((place.venue.categories[0].name === searchQuery) || (searchQuery === 'all')) {
+        place.visible = true
+      } else {
+        place.visible = false
+      }
+      return place
+    });
+
+    this.setState({selectPlaces, searchQuery});
+    this.setMarkers(map)
+  };*/
 
   componentDidMount() {
     this.getPlaces()
@@ -35,16 +59,30 @@ class DropDown extends Component {
       });
     }
 
+    handleChange = (event) =>{
+            //let choice = event.target.value;
+            //this.props.filter(choice);
+            //let places = this.props.places.filter(place => place.visible === true);
+            this.setState({selectValue: event.target.value});
+        };
+
   render() {
     return (
       <div className='drop-down-container'>
-       <select className='drop-down-content' value={this.state.selectedPlaces}
-               onChange={(e) => this.setState({selectedPlaces: e.target.value, validationError: e.target.value === '' ? 'You must select a place' : ''})}>
-        {this.state.places.map((place) => <option key={place.venue.id} value={place.venue.categories[0].name}>{place.venue.categories[0].name}</option>)}
-        </select>
-        <div style={{color: 'red', marginTop: '5px'}}>
-         {this.state.validationError}
-         </div>
+        <div className='drop-down'>
+          <select className='drop-down-content' onChange={this.handleChange} defaultValue={this.state.selectValue}>
+            <option value="All">All</option>
+            <option value="Temple">Temple</option>
+            <option value="Hotel">Hotel</option>
+            <option value="Restaurant">Indonesia Restaurant</option>
+            <option value="History Museum">History Museum</option>
+            <option value="Rafting">Rafting</option>
+          </select>
+
+          <ul className="places-list">
+
+          </ul>
+        </div>
       </div>
     );
   }

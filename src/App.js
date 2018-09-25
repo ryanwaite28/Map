@@ -10,6 +10,7 @@ import AppTitle from './AppTitle'
 import iconRedUrl from './location-pointer-red.svg'
 import iconBlueUrl from './location-pointer-blue.svg'
 import DropDown from './DropDown'
+
 //https://github.com/PaulLeCam/react-leaflet/issues/453
 //delete L.Icon.Default.prototype._getIconUrl;
 
@@ -48,29 +49,9 @@ class App extends Component {
       zoom: 13,
       places: [],
       markers: [],
-      searchQuery: 'all',
     };
   }
 
-  //function to filter based on place category
-  /*filter = (searchQuery) => {
-    const map = this.state.map;
-    const markers= this.state.markers;
-    //clear map
-    markers.forEach(marker => marker.setMap(null))
-
-    const selectPlaces = this.state.places.map((place) => {
-      if ((place.venue.categories[0].name === searchQuery) || (searchQuery === 'all')) {
-        place.visible = true
-      } else {
-        place.visible = false
-      }
-      return place
-    });
-
-    this.setState({selectPlaces, searchQuery});
-    this.setMarkers(map)
-  };*/
   /*changeMarkerColor = (e) => {
     const {markers} = this.state
     e.target.setIcon(blueIcon);
@@ -146,6 +127,7 @@ class App extends Component {
           ))}
         </Map>
         <DropDown />
+
       </div>
     );
   }

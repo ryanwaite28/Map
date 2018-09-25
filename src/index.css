@@ -1,9 +1,12 @@
 /* SideBar */
 
-.side-nav-container {
-    display:flex;
-    justify-content: center;
-    width: 30%;
+.drop-down-container {
+    z-index: 999;
+    position: absolute;
+    top: 70px;
+    margin-left: 5px;
+    display: flex;
+        justify-content: center;
 }
 
 .location-list {
