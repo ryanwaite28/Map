@@ -9,29 +9,16 @@ class DropDown extends Component {
   state = {
     places: [],
     /*selectedPlaces: '',
-    validationError: '',
-    searchQuery: 'all',*/
+    validationError: '',*/
+    searchQuery: 'all',
   };
 
-  //function to filter based on place category
-  /*filter = (searchQuery) => {
-    const map = this.state.map;
-    const markers= this.state.markers;
-    //clear map
-    markers.forEach(marker => marker.setMap(null))
-
-    const selectPlaces = this.state.places.map((place) => {
-      if ((place.venue.categories[0].name === searchQuery) || (searchQuery === 'all')) {
-        place.visible = true
-      } else {
-        place.visible = false
-      }
-      return place
-    });
-
-    this.setState({selectPlaces, searchQuery});
-    this.setMarkers(map)
-  };*/
+  handleChange = (event) =>{
+          //let choice = event.target.value;
+          //this.props.filter(choice);
+          //let places = this.props.places.filter(place => place.visible === true);
+          this.setState({selectValue: event.target.value});
+      };
 
   componentDidMount() {
     this.getPlaces()
@@ -59,14 +46,29 @@ class DropDown extends Component {
       });
     }
 
-    handleChange = (event) =>{
-            //let choice = event.target.value;
-            //this.props.filter(choice);
-            //let places = this.props.places.filter(place => place.visible === true);
-            this.setState({selectValue: event.target.value});
-        };
+    //function to filter based on place category
+    filter = (searchQuery) => {
+      const map = this.state.map;
+      const markers= this.state.markers;
+      //clear map
+      markers.forEach(marker => marker.setMap(null))
+
+      const selectPlaces = this.state.places.map((place) => {
+        if ((place.venue.categories[0].name === searchQuery) || (searchQuery === 'all')) {
+          place.visible = true
+        } else {
+          place.visible = false
+        }
+        return place
+      });
+
+      this.setState({selectPlaces, searchQuery});
+      this.setMarkers(map)
+    };
+
 
   render() {
+    const {selectPlaces} = this.props;
     return (
       <div className='drop-down-container'>
         <div className='drop-down'>
@@ -80,7 +82,11 @@ class DropDown extends Component {
           </select>
 
           <ul className="places-list">
-
+            {
+              this.state.places.map(place => (
+                <ListItem selectPlaces={selectPlaces} />
+              ))
+            }
           </ul>
         </div>
       </div>
