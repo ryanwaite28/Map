@@ -1,93 +1,75 @@
 import React, {Component} from "react";
 import './App.css';
-import ListItem from './ListItem'
 import axios from 'axios';
+import PropTypes from 'prop-types'
 
 //https://www.carlrippon.com/react-drop-down-data-binding/
+//https://www.youtube.com/watch?v=dAhMIF0fNpo
+
+
 
 class DropDown extends Component {
-  state = {
-    places: [],
-    /*selectedPlaces: '',
-    validationError: '',*/
-    searchQuery: 'all',
-  };
-
-  handleChange = (event) =>{
-          //let choice = event.target.value;
-          //this.props.filter(choice);
-          //let places = this.props.places.filter(place => place.visible === true);
-          this.setState({selectValue: event.target.value});
-      };
-
-  componentDidMount() {
-    this.getPlaces()
+  constructor (props) {
+    super(props);
+    this.state = {
+      places: [],
+      selectedPlaces: '',
+    //validationError: '',*/
+    //searchQuery: 'all',
+    };
   }
 
-  //https://www.youtube.com/watch?v=dAhMIF0fNpo
-  getPlaces = () => {
-    const endPoint = "https://api.foursquare.com/v2/venues/explore?"
-    const parameters = {
-      client_id: "POKXMHQJY0EHTRGZEPMVWPJDWMUTSVRRINJILUSE5WZTSTUI",
-      client_secret: "N4QKO4TTH4QKBFQ3SBYHUTQ5RUWMGAZ0B5JDYUE0H3V2W151",
-      section: "nextVenues",
-      near: "Borobudur",
-      v: "20180725"
+    /*static propTypes = {
+      places: PropTypes.arrayOf(PropTypes.object),
+      onChange: PropTypes.func.isRequired
     }
-    axios.get(endPoint + new URLSearchParams(parameters))
-      .then(response => {
-        console.log(response.data.response.groups[0].items)
-        this.setState({
-          places: response.data.response.groups[0].items
+
+    handleChange = (category) => this.props.onChange(category);*/
+
+    componentDidMount() {
+      this.getPlaces()
+    }
+
+    getPlaces = () => {
+      const endPoint = "https://api.foursquare.com/v2/venues/explore?"
+      const parameters = {
+        client_id: "POKXMHQJY0EHTRGZEPMVWPJDWMUTSVRRINJILUSE5WZTSTUI",
+        client_secret: "N4QKO4TTH4QKBFQ3SBYHUTQ5RUWMGAZ0B5JDYUE0H3V2W151",
+        section: "nextVenues",
+        near: "Borobudur",
+        v: "20180725"
+      }
+      axios.get(endPoint + new URLSearchParams(parameters))
+        .then(response => {
+          console.log(response.data.response.groups[0].items)
+          this.setState({
+            places: response.data.response.groups[0].items
+          })
         })
-      })
-      .catch(error => {
-        console.log("Error!" + error)
-      });
-    }
-
-    //function to filter based on place category
-    filter = (searchQuery) => {
-      const map = this.state.map;
-      const markers= this.state.markers;
-      //clear map
-      markers.forEach(marker => marker.setMap(null))
-
-      const selectPlaces = this.state.places.map((place) => {
-        if ((place.venue.categories[0].name === searchQuery) || (searchQuery === 'all')) {
-          place.visible = true
-        } else {
-          place.visible = false
-        }
-        return place
-      });
-
-      this.setState({selectPlaces, searchQuery});
-      this.setMarkers(map)
-    };
-
+        .catch(error => {
+          console.log("Error!" + error)
+        })
+      }
 
   render() {
-    const {selectPlaces} = this.props;
+    /*const {places} = this.props;
+    const categoryArray =['all'];
+
+      this.state.places.map(place => {
+        place.category.map(category => {
+          if (categoryArray.indexOf(category) < 0) {
+            categoryArray.push(category);
+            }
+          });
+        });*/
+
     return (
       <div className='drop-down-container'>
         <div className='drop-down'>
-          <select className='drop-down-content' onChange={this.handleChange} defaultValue={this.state.selectValue}>
-            <option value="All">All</option>
-            <option value="Temple">Temple</option>
-            <option value="Hotel">Hotel</option>
-            <option value="Restaurant">Indonesia Restaurant</option>
-            <option value="History Museum">History Museum</option>
-            <option value="Rafting">Rafting</option>
-          </select>
-
-          <ul className="places-list">
-            {
-              this.state.places.map(place => (
-                <ListItem selectPlaces={selectPlaces} />
-              ))
-            }
-          </ul>
+            <select className='drop-down-content' value={this.state.selectedPlaces}
+                    onChange={(e) => this.setState ({selectedPlaces: e.target.value})}>
+             {this.state.places.map((place) => <option key={place.venue.id} venue={place.venue}>{place.venue.categories[0].name}</option>)}
+              </select>
         </div>
       </div>
     );

@@ -18,7 +18,7 @@ class ListItem extends Component {
       near: "Borobudur",
       v: "20180725"
     }
-    axios.get(endPoint + new URLSearchParams(parameters))
+    /*axios.get(endPoint + new URLSearchParams(parameters))
       .then(response => {
         console.log(response.data.response.groups[0].items)
         this.setState({
@@ -27,7 +27,7 @@ class ListItem extends Component {
       })
       .catch(error => {
         console.log("Error!" + error)
-      });
+      });*/
     }
 
   openMarker = () => {

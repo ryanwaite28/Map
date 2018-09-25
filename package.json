@@ -10,6 +10,7 @@
     "react": "^16.5.1",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.5.1",
+    "react-foursquare": "^1.0.3",
     "react-leaflet": "^2.0.1",
     "react-leaflet-animated-marker": "^1.0.2",
     "react-leaflet-div-icon": "^1.1.0",

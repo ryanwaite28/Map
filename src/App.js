@@ -38,8 +38,8 @@ const blueIcon = L.icon({
 //https://www.youtube.com/watch?v=J7pFiXh-ydA
 
 class App extends Component {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = {
       map: {},
       location: {
@@ -49,6 +49,7 @@ class App extends Component {
       zoom: 13,
       places: [],
       markers: [],
+      //activeCategory: 'all'
     };
   }
 
@@ -88,8 +89,12 @@ class App extends Component {
       })
     }
 
+    //handleChange = (category) => {
+    //  console.log(category);
+    //}
   render() {
     const position = [this.state.location.lat, this.state.location.lng];
+    //const {activeCategory} = this.state;
     //const {searchQuery, places, map, markers, place} = this.state;
     //const value = this.state;
     return (
@@ -126,7 +131,8 @@ class App extends Component {
             </Marker>
           ))}
         </Map>
-        <DropDown />
+
+        <DropDown/>
 
       </div>
     );
