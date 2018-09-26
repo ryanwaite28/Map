@@ -68,7 +68,10 @@ class DropDown extends Component {
         <div className='drop-down'>
             <select className='drop-down-content' value={this.state.selectedPlaces}
                     onChange={(e) => this.setState ({selectedPlaces: e.target.value})}>
-             {this.state.places.map((place) => <option key={place.venue.id} venue={place.venue}>{place.venue.categories[0].name}</option>)}
+             //{this.state.places.map((place) => <option key={place.venue.id} venue={place.venue}>{place.venue.categories[0].name}</option>)}
+             {this.setState({
+            places: places.filter((allPlaces, idx, places) => places.map(singlePlace => singlePlace.venue.categories[0].name).indexOf(allPlaces.venue.categories[0].name) === idx)
+          })}>
               </select>
         </div>
       </div>
