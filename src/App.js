@@ -9,7 +9,7 @@ import axios from 'axios';
 import AppTitle from './AppTitle'
 import iconRedUrl from './location-pointer-red.svg'
 import iconBlueUrl from './location-pointer-blue.svg'
-//import DropDown from './DropDown'
+import DropDown from './DropDown'
 
 //https://github.com/PaulLeCam/react-leaflet/issues/453
 //delete L.Icon.Default.prototype._getIconUrl;
@@ -121,7 +121,7 @@ class App extends Component {
             </Marker>
           ))}
         </Map>
-
+        <DropDown />
       </div>
     );
   }

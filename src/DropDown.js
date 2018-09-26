@@ -52,8 +52,8 @@ class DropDown extends Component {
       }
 
   render() {
-    /*const {places} = this.props;
-    const categoryArray =['all'];
+    const {places} = this.props;
+    /*const categoryArray =['all'];
 
       this.state.places.map(place => {
         place.category.map(category => {
