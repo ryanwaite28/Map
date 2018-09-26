@@ -9,7 +9,7 @@ import axios from 'axios';
 import AppTitle from './AppTitle'
 import iconRedUrl from './location-pointer-red.svg'
 import iconBlueUrl from './location-pointer-blue.svg'
-import DropDown from './DropDown'
+import Filter from './Filter'
 
 //https://github.com/PaulLeCam/react-leaflet/issues/453
 //delete L.Icon.Default.prototype._getIconUrl;
@@ -79,9 +79,6 @@ class App extends Component {
       })
     }
 
-    //handleChange = (category) => {
-    //  console.log(category);
-    //}
   render() {
     const position = [this.state.location.lat, this.state.location.lng];
     //const {activeCategory} = this.state;
@@ -110,8 +107,6 @@ class App extends Component {
                  e.target.setIcon(blueIcon);
                }, 1500);
              }}
-              //onClick={this.changeMarkerColor}
-              //MarkerColor={this.state.MarkerColor}
              >
               <Popup>
                 <p className="place-name">{[place.venue.name]}</p>
@@ -121,7 +116,7 @@ class App extends Component {
             </Marker>
           ))}
         </Map>
-        <DropDown />
+        <Filter />
       </div>
     );
   }

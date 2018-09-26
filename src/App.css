@@ -25,7 +25,7 @@ html {
 
 .map {
   height: 90%;
-  margin-left: 250px;
+  margin-left: 350px;
   margin-right: 0px;
 }
 
@@ -47,15 +47,18 @@ html {
   font-weight: 400;
 }
 
-.drop-down-container {
+.side-container {
   z-index: 999;
   position: absolute;
   top: 70px;
-  margin-left: 5px;
+  margin-left: 20px;
+  margin-top: 10px;
+  width: 300px;
 }
 
-.drop-down-content {
-  width: 240px;
+.input-box {
+  width: 300px;
+  margin-bottom: 20px;
 }
 
 #root {
