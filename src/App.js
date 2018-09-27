@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'; // Re-uses images from ~leaflet package
-import 'leaflet-defaulticon-compatibility';
+//import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'; // Re-uses images from ~leaflet package
+//import 'leaflet-defaulticon-compatibility';
 import './App.css';
 import axios from 'axios';
 import AppTitle from './AppTitle'
@@ -49,7 +49,6 @@ class App extends Component {
       zoom: 13,
       places: [],
       markers: [],
-      //activeCategory: 'all'
     };
   }
 
@@ -81,21 +80,21 @@ class App extends Component {
 
   render() {
     const position = [this.state.location.lat, this.state.location.lng];
-    //const {activeCategory} = this.state;
-    //const {searchQuery, places, map, markers, place} = this.state;
-    //const value = this.state;
+
     return (
       <div className="main-wrap">
         <AppTitle />
         <Map className="map"
           center={position}
           zoom={this.state.zoom}
+
           >
           <TileLayer
            attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
            />
-           {this.state.places.map(place => (
+
+           {this.state.places.slice(0,11).map(place => (
              <Marker
               key={place.venue.id}
               position={[place.venue.location.lat, place.venue.location.lng]}

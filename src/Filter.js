@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import './App.css';
 import axios from 'axios';
 
+
 //https://www.youtube.com/watch?v=dAhMIF0fNpo
 //https://egghead.io/lessons/react-use-map-to-create-react-components-from-arrays-of-data
 
@@ -44,18 +45,26 @@ class Filter extends Component {
   }
 
   render() {
-    let places = this.state.places
+    let places = this.state.places.slice(0,11)
+
     if(this.state.filter) {
       places = places.filter ( place =>
         place.venue.name.toLowerCase()
         .includes(this.state.filter.toLowerCase()))
     }
 
+
     return (
       <div className = 'side-container'>
         <input className = 'input-box' type='text'
         onChange={this.filter.bind(this)} />
-        {places.map(place => <h4 key={place.venue.id}>{place.venue.name}</h4>)}
+
+        <div>
+          {places.map(place =>
+            <p className = 'list-places' key={place.venue.id}>
+              {place.venue.name}
+            </p>)}
+        </div>
       </div>
     );
   }

@@ -61,6 +61,11 @@ html {
   margin-bottom: 20px;
 }
 
+.list-places {
+  font-size: 20px;
+  font-weight: 400;
+}
+
 #root {
   height: 100%;
 }
