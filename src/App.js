@@ -2,23 +2,12 @@ import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-//import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'; // Re-uses images from ~leaflet package
-//import 'leaflet-defaulticon-compatibility';
 import './App.css';
 import axios from 'axios';
 import AppTitle from './AppTitle'
 import iconRedUrl from './location-pointer-red.svg'
 import iconBlueUrl from './location-pointer-blue.svg'
 import Filter from './Filter'
-
-//https://github.com/PaulLeCam/react-leaflet/issues/453
-//delete L.Icon.Default.prototype._getIconUrl;
-
-/*L.Icon.Default.mergeOptions({
-    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-    iconUrl: require('leaflet/dist/images/marker-icon.png'),
-    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-});*/
 
 const redIcon = L.icon({
     iconUrl: iconRedUrl,
@@ -48,13 +37,21 @@ class App extends Component {
       },
       zoom: 13,
       places: [],
-      markers: [],
+      showMarkers: []
     };
+  }
+
+  placeClicked(placeId){
+    console.log(placeId)
+    let showMarkers = this.state.showMarkers.slice(0);
+    showMarkers[placeId] = !showMarkers[placeId];
+    this.setState({showMarkers});
   }
 
   componentDidMount() {
     this.getPlaces()
   }
+
 
   //https://www.youtube.com/watch?v=dAhMIF0fNpo
   getPlaces = () => {
@@ -64,6 +61,7 @@ class App extends Component {
       client_secret: "N4QKO4TTH4QKBFQ3SBYHUTQ5RUWMGAZ0B5JDYUE0H3V2W151",
       section: "nextVenues",
       near: "Borobudur",
+      limit: "10",
       v: "20180725"
     }
     axios.get(endPoint + new URLSearchParams(parameters))
@@ -80,6 +78,8 @@ class App extends Component {
 
   render() {
     const position = [this.state.location.lat, this.state.location.lng];
+    //let shown ={ display: this.state.shown ? 'block' : 'none'};
+    //let hidden = { display: this.state.shown ? 'none' : 'block'}
 
     return (
       <div className="main-wrap">
@@ -94,7 +94,7 @@ class App extends Component {
            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
            />
 
-           {this.state.places.slice(0,11).map(place => (
+           {this.state.places.map(place => (
              <Marker
               key={place.venue.id}
               position={[place.venue.location.lat, place.venue.location.lng]}
@@ -115,7 +115,9 @@ class App extends Component {
             </Marker>
           ))}
         </Map>
-        <Filter />
+        <Filter placeClicked={this.placeClicked.bind (this,placeId)}>
+          marker {this.state.showMarkers[placeId] ? : null}
+        </Filter>
       </div>
     );
   }

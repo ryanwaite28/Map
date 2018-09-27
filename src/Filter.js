@@ -26,6 +26,7 @@ class Filter extends Component {
       client_secret: "N4QKO4TTH4QKBFQ3SBYHUTQ5RUWMGAZ0B5JDYUE0H3V2W151",
       section: "nextVenues",
       near: "Borobudur",
+      limit: "10",
       v: "20180725"
     }
     axios.get(endPoint + new URLSearchParams(parameters))
@@ -44,8 +45,12 @@ class Filter extends Component {
     this.setState({filter: e.target.value})
   }
 
+  placeClicked(placeId) {
+   this.props.placeClicked(placeId)
+ }
+
   render() {
-    let places = this.state.places.slice(0,11)
+    let places = this.state.places
 
     if(this.state.filter) {
       places = places.filter ( place =>
@@ -61,10 +66,14 @@ class Filter extends Component {
 
         <div>
           {places.map(place =>
-            <p className = 'list-places' key={place.venue.id}>
-              {place.venue.name}
-            </p>)}
+            <p className = 'list-places'
+               key={place.venue.id}
+               onClick={e=>this.placeClicked(place.venue.id)}
+                >{place.venue.name}
+            </p>
+          )}
         </div>
+
       </div>
     );
   }
