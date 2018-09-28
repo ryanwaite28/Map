@@ -53,11 +53,6 @@ class App extends Component {
       this.setState({places});
     }
 
-        //let showMarkers = this.state.showMarkers.slice(0);
-        //console.log(showMarkers)
-        // showMarkers[placeId] = !showMarkers[placeId];
-        // this.setState({ showMarkers });
-
   componentDidMount() {
     this.getPlaces()
   }
@@ -106,10 +101,10 @@ class App extends Component {
 
            {this.state.places.map(place => (
              <Marker
-              let placeClicked={this.state.placeClicked ? 'redIcon' : 'blueIcon'}
               key={place.venue.id}
               position={[place.venue.location.lat, place.venue.location.lng]}
-              icon={blueIcon}
+              icon={place.placeClicked ? redIcon : blueIcon}
+                    zIndexOffset={place.placeClicked ? 10000 : 0}
               onClick={(e) => {
                console.log(e);
                e.target.setIcon(redIcon);
@@ -126,7 +121,8 @@ class App extends Component {
             </Marker>
           ))}
         </Map>
-        <Filter placeClicked={this.placeClicked.bind (this.placeId)} />
+        <Filter placeClicked={this.placeClicked.bind (this.placeId)}>
+        </Filter>
       </div>
     );
   }
