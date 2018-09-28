@@ -37,16 +37,26 @@ class App extends Component {
       },
       zoom: 13,
       places: [],
-      showMarkers: []
     };
   }
 
-  placeClicked(placeId){
-    console.log(placeId)
-    let showMarkers = this.state.showMarkers.slice(0);
-    showMarkers[placeId] = !showMarkers[placeId];
-    this.setState({showMarkers});
-  }
+  placeClicked = (placeId) => {
+      let places = this.state.places;
+      places.forEach(place => {
+          if(placeId === place.venue.id) {
+              console.log('match at place' + place.venue.name)
+              place.placeClicked = true;
+          } else {
+              place.placeClicked = false;
+          }
+      });
+      this.setState({places});
+    }
+
+        //let showMarkers = this.state.showMarkers.slice(0);
+        //console.log(showMarkers)
+        // showMarkers[placeId] = !showMarkers[placeId];
+        // this.setState({ showMarkers });
 
   componentDidMount() {
     this.getPlaces()
@@ -96,6 +106,7 @@ class App extends Component {
 
            {this.state.places.map(place => (
              <Marker
+              let placeClicked={this.state.placeClicked ? 'redIcon' : 'blueIcon'}
               key={place.venue.id}
               position={[place.venue.location.lat, place.venue.location.lng]}
               icon={blueIcon}
@@ -115,9 +126,7 @@ class App extends Component {
             </Marker>
           ))}
         </Map>
-        <Filter placeClicked={this.placeClicked.bind (this,placeId)}>
-          marker {this.state.showMarkers[placeId] ? : null}
-        </Filter>
+        <Filter placeClicked={this.placeClicked.bind (this.placeId)} />
       </div>
     );
   }

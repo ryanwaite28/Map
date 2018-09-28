@@ -61,19 +61,21 @@ class Filter extends Component {
 
     return (
       <div className = 'side-container'>
-        <input className = 'input-box' type='text'
-        onChange={this.filter.bind(this)} />
+        <input className = 'input-box'
+         bsStyle = 'Input Group'
+         type='text'
+         onChange={this.filter.bind(this)} />
 
-        <div>
+        <div className = 'list-container'>
           {places.map(place =>
             <p className = 'list-places'
+               bsStyle = 'List Group'
                key={place.venue.id}
                onClick={e=>this.placeClicked(place.venue.id)}
                 >{place.venue.name}
             </p>
           )}
         </div>
-
       </div>
     );
   }
