@@ -101,6 +101,7 @@ class App extends Component {
 
            {this.state.places.map(place => (
              <Marker
+
               key={place.venue.id}
               position={[place.venue.location.lat, place.venue.location.lng]}
               icon={place.placeClicked ? redIcon : blueIcon}
@@ -114,6 +115,7 @@ class App extends Component {
              }}
              >
               <Popup>
+              {this.state.placeClicked && <p>{place.venue.location.address}</p>}
                 <p className="place-name">{[place.venue.name]}</p>
                 <p className="place-address">{[place.venue.location.address]}</p>
                 <p className="place-category">{[place.venue.categories[0].name]}</p>
