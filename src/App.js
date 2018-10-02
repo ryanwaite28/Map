@@ -112,7 +112,8 @@ class App extends Component {
                         e.target.setIcon(blueIcon);
                       }, 1500);
                     }}>
-              <Popup>
+              <Popup
+                Popup = {place.placeClicked ? "block" : "none"}>
                 <p className="place-name">{[place.venue.name]}</p>
                 <p className="place-address">{[place.venue.location.address]}</p>
                 <p className="place-category">{[place.venue.categories[0].name]}</p>
