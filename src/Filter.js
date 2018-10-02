@@ -62,12 +62,16 @@ class Filter extends Component {
     return (
       <div className = 'side-container'>
         <input className = 'input-box'
+         tabIndex="0"
+         aria-label= "input-box"
          type='text'
          onChange={this.filter.bind(this)} />
 
         <div className = 'list-container'>
           {places.map(place =>
             <p className = 'list-places'
+               tabIndex="0"
+               role="link"
                key={place.venue.id}
                onClick={e=>this.placeClicked(place.venue.id)}
                 >{place.venue.name}

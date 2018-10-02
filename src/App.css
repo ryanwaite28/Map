@@ -5,13 +5,18 @@ html {
   height: 100%;
 }
 
+body {
+  background-color: #E2F8E2;
+}
+
 .header{
   position: relative;
-  width: 100%;
+  max-width: 100%;
   height: 60px;
   margin-top: 0;
   left: 0;
-  background-color: #DBDBFF;
+  background-color: #A5E9A5;
+
 }
 
 .main-wrap {
@@ -20,8 +25,10 @@ html {
 
 .map {
   height: 90%;
-  margin-left: 350px;
-  margin-right: 0px;
+  margin-left: 300px;
+  margin-right: 10px;
+  max-width: 100%;
+  border: 1px;
 }
 
 .project-title{
@@ -53,12 +60,17 @@ html {
   top: 70px;
   margin-left: 20px;
   margin-top: 10px;
-  width: 300px;
+  max-width: 280px;
 }
 
 .input-box {
-  width: 300px;
-  margin-bottom: 20px;
+  max-width: 100%;
+  margin-bottom: 5px;
+  height: 30px;
+}
+
+.list-container{
+  max-width: 100%;
 }
 
 .list-places {

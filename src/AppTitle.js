@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const AppTitle = (props) => {
   return(
-      <div className="header">
+      <div className="header" tabIndex ="0">
         <h1 className="project-title"> { props.title } </h1>
       </div>
   )

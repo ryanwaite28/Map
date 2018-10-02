@@ -87,35 +87,32 @@ class App extends Component {
     //let hidden = { display: this.state.shown ? 'none' : 'block'}
 
     return (
-      <div className="main-wrap">
+      <div className="main-wrap" tabIndex ="0" role="application" aria-label="map-description">
         <AppTitle />
+
         <Map className="map"
           center={position}
-          zoom={this.state.zoom}
+          zoom={this.state.zoom}>
 
-          >
           <TileLayer
-           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-           />
+            attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
 
-           {this.state.places.map(place => (
-             <Marker
-
+          {this.state.places.map(place => (
+            <Marker
               key={place.venue.id}
               position={[place.venue.location.lat, place.venue.location.lng]}
               icon={place.placeClicked ? redIcon : blueIcon}
                     zIndexOffset={place.placeClicked ? 10000 : 0}
-              onClick={(e) => {
-               console.log(e);
-               e.target.setIcon(redIcon);
-               setTimeout(() => {
-                 e.target.setIcon(blueIcon);
-               }, 1500);
-             }}
-             >
+                    onClick={(e) => {
+                      console.log(e);
+                      e.target.setIcon(redIcon);
+                      setTimeout(() => {
+                        e.target.setIcon(blueIcon);
+                      }, 1500);
+                    }}>
               <Popup>
-              {this.state.placeClicked && <p>{place.venue.location.address}</p>}
                 <p className="place-name">{[place.venue.name]}</p>
                 <p className="place-address">{[place.venue.location.address]}</p>
                 <p className="place-category">{[place.venue.categories[0].name]}</p>
@@ -123,8 +120,9 @@ class App extends Component {
             </Marker>
           ))}
         </Map>
-        <Filter placeClicked={this.placeClicked.bind (this.placeId)}>
-        </Filter>
+
+        <Filter placeClicked={this.placeClicked.bind (this.placeId)} />
+
       </div>
     );
   }
