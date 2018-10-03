@@ -37,21 +37,16 @@ class App extends Component {
       },
       zoom: 13,
       places: [],
+      activePlace: null
     };
   }
 
   placeClicked = (placeId) => {
-      let places = this.state.places;
-      places.forEach(place => {
-          if(placeId === place.venue.id) {
-              console.log('match at place' + place.venue.name)
-              place.placeClicked = true;
-          } else {
-              place.placeClicked = false;
-          }
-      });
-      this.setState({places});
-    }
+    let place = this.state.places.filter(p => p.venue.id === placeId)[0];
+    this.setState({ activePlace: place }, () => {
+      console.log(this);
+    });
+  }
 
   componentDidMount() {
     this.getPlaces()
@@ -103,26 +98,31 @@ class App extends Component {
             <Marker
               key={place.venue.id}
               position={[place.venue.location.lat, place.venue.location.lng]}
-              icon={place.placeClicked ? redIcon : blueIcon}
-                    zIndexOffset={place.placeClicked ? 10000 : 0}
-                    onClick={(e) => {
-                      console.log(e);
+              icon={place.placeClicked ? redIcon : blueIcon} zIndexOffset={place.placeClicked ? 10000 : 0}
+              onClick={(e) => {
+                      console.log(e, place);
                       e.target.setIcon(redIcon);
-                      setTimeout(() => {
-                        e.target.setIcon(blueIcon);
-                      }, 1500);
-                    }}>
-              <Popup
-                Popup = {place.placeClicked ? "block" : "none"}>
-                <p className="place-name">{[place.venue.name]}</p>
-                <p className="place-address">{[place.venue.location.address]}</p>
-                <p className="place-category">{[place.venue.categories[0].name]}</p>
-              </Popup>
+                      setTimeout(() => { e.target.setIcon(blueIcon); }, 3000);
+                      this.setState({ activePlace: place });
+              }}>
             </Marker>
           ))}
+
+          {
+            this.state.activePlace && (
+              <Popup Popup="none"
+                position={[this.state.activePlace.venue.location.lat, this.state.activePlace.venue.location.lng ]}
+                onClose={() => { this.setState({ activePlace: null }); }}>
+                <p className="place-name">{this.state.activePlace.venue.name}</p>
+                <p className="place-address">{this.state.activePlace.venue.location.address}</p>
+                <p className="place-category">{this.state.activePlace.venue.categories[0].name}</p>
+              </Popup>
+            )
+          }
+
         </Map>
 
-        <Filter placeClicked={this.placeClicked.bind (this.placeId)} />
+        <Filter placeClicked={this.placeClicked} />
 
       </div>
     );

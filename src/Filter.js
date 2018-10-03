@@ -12,6 +12,7 @@ class Filter extends Component {
     this.state = {
       places: [],
     };
+    this.filter = this.filter.bind(this);
   }
 
   componentDidMount() {
@@ -65,7 +66,7 @@ class Filter extends Component {
          tabIndex="0"
          aria-label= "input-box"
          type='text'
-         onChange={this.filter.bind(this)} />
+         onChange={this.filter} />
 
         <div className = 'list-container'>
           {places.map(place =>
